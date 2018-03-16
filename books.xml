@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BOOKS>
+	<BOOK>
+		<TITLE>The Data Warehouse Toolkit, 3rd Edition</TITLE>
+		<AUTHORS>
+			<AUTHOR>
+				<NAME>Ralph Kimball</NAME>
+			</AUTHOR>
+			<AUTHOR>
+				<NAME>Margy Ross</NAME>
+			</AUTHOR>
+		</AUTHORS>	
+		<PUBLISHER>John Wiley &amp; Sons, Inc.</PUBLISHER>
+		<YEAR>2013</YEAR>				
+		<PAGES>563</PAGES>
+		<ISBN>978-1-118-53080-1</ISBN>
+	</BOOK>
+	<BOOK>
+		<TITLE>Data Science of Business, 3rd Edition</TITLE>
+		<AUTHORS>
+			<AUTHOR>
+				<NAME>Foster Provost</NAME>
+			</AUTHOR>
+			<AUTHOR>
+				<NAME>Tom Fawcett</NAME>
+			</AUTHOR>
+		</AUTHORS>	
+		<PUBLISHER>O’Reilly Media, Inc.</PUBLISHER>
+		<YEAR>2013</YEAR>
+		<PAGES>384</PAGES>
+		<ISBN>978-1-449-36132-7</ISBN>				
+	</BOOK>
+	<BOOK>
+		<TITLE>Introduction to the Design and Analysis of Algorithms</TITLE>
+		<AUTHORS>
+			<AUTHOR>
+				<NAME>Anany Levitin</NAME>
+			</AUTHOR>
+		</AUTHORS>
+		<PUBLISHER>Addison-Wesley</PUBLISHER>
+		<YEAR>2003</YEAR>
+		<PAGES>497</PAGES>
+		<ISBN>9780201743951</ISBN>				
+	</BOOK>
+</BOOKS>

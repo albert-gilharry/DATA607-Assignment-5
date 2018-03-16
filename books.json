@@ -1,0 +1,27 @@
+{
+	"books": [
+				{	"title":"The Data Warehouse Toolkit, 3rd Edition", 
+					"author":["Ralph Kimball", "Margy Ross"],
+					"publisher": "John Wiley & Sons, Inc.",
+					"year": 2013,
+					"pages": 563,
+					"isbn": "978-1-118-53080-1"
+				},
+				
+				{	"title":"Data Science of Business, 3rd Edition", 
+					"author":["Foster Provost", "Tom Fawcett"],
+					"publisher": "O’Reilly Media, Inc.",
+					"year": 2013,
+					"pages": 384,
+					"isbn": "978-1-449-36132-7"
+				},
+				
+				{	"title":"Introduction to the Design and Analysis of Algorithms", 
+					"author":["Anany Levitin"],
+					"publisher": "Addison-Wesley",
+					"year": 2003,
+					"pages": 497,
+					"isbn": "9780201743951"
+				}
+			]
+}
