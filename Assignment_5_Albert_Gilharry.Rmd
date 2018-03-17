@@ -1,0 +1,35 @@
+---
+title: 'DATA607 Assignment 4: Tidying and Transformation Data'
+author: "Albert Gilharry"
+date: "15 March 2018"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    css: ./css.css
+    highlight: pygments
+    pdf_document: default
+    theme: cerulean
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Intro
+
+<div id = "solution">
+**For this assignment we were given a data set containing on time and delay information of 2 airlines.**
+**We were tasked with tidying, transforming, and analyzing the data.**
+**My solution is documented below**
+</div>
+
+
+## Load Libraries
+
+```{r load-libraries}
+library("dplyr")
+library("tidyr")
+library("tidyverse")
+```
