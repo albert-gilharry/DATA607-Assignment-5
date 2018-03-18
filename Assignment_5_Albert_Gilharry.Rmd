@@ -20,16 +20,133 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Intro
 
 <div id = "solution">
-**For this assignment we were given a data set containing on time and delay information of 2 airlines.**
-**We were tasked with tidying, transforming, and analyzing the data.**
-**My solution is documented below**
+**For this assignment, we were tasked with creating HTML, XML, and JSON files of 3 or our favourite books on one of our favorite topics.**
+**At least one of the books must have more than one author.**
+**Each of the different file structures should be loaded into R data frames. This is a primer for further work with these structures in the semseter.**
 </div>
 
 
 ## Load Libraries
 
 ```{r load-libraries}
-library("dplyr")
-library("tidyr")
 library("tidyverse")
+library("rvest")
+library("XML")
+library("methods")
+library("jsonlite")
+library("stringr")
+library("DT")
+
 ```
+## Preview HTML File
+
+![HTML FIle](images/HTML.PNG)
+
+
+## Load HTML Data & Create Data Frame
+
+<div id  = "solution">
+```{r}
+
+# load HTML data into data frame
+url <- "data/books.html"
+htmlBooks <- url %>%
+  read_html() %>%
+  html_nodes("table") %>%
+  html_table()
+```
+</div>
+
+## View HTML Data Frame
+
+<div id = "solution">
+```{r}
+datatable(htmlBooks, options = list(filter = FALSE),filter="none")
+```
+</div>
+
+## Preview XML File
+
+![HTML FIle](images/XML.PNG)
+
+
+## Load XML Data & Create Data Frame
+
+<div id = "comment">
+The books with multiple authors posed a problem because the built in functionality to convert XML to a data frame 
+concatenates the author nodes without a delimiter. For this reason, I looped through the data to format the authors' names properly.
+This may not be most efficient way of doing so, but this is a very small data set, so it is fine.
+</div>
+
+<div id = "solution">
+```{r}
+doc <- xmlParse("data/books.xml")
+
+data <- xpathSApply(doc, "//BOOKS/BOOK/AUTHORS",xmlChildren, simplify = TRUE)
+authors = c()
+for(i in 1:length(data)){
+  c <- c()
+  for(j in 1:length(data[[i]])){
+   c <-  append( c, xmlValue(data[[i]][[j]]) )
+  }
+  authors <- append(authors, paste(unlist(c),collapse = ", "))
+}
+
+# use the built in function to create the data frame
+xmlBooks <- xmlToDataFrame("data/books.xml",stringsAsFactors = FALSE)
+
+# fix the authors
+xmlBooks$AUTHORS <- authors
+```
+</div>
+
+## View XML Data Table
+
+<div id = "solution">
+```{r}
+datatable(xmlBooks, options = list(filter = FALSE),filter="none")
+```
+</div>
+
+
+## Preview XML File
+
+![HTML FIle](images/JSON.PNG)
+
+
+## Load JSON Data & Create Data Frame
+
+<div id = "comment">
+The books with multiple authors posed a problem again because the built in functionality to create a data frame from JSON data
+attaches an list for the authors. I looped through the data to format the authors.
+This may not be the most efficient way of doing so, but this is a very small data set, so it is fine.
+</div>
+
+<div id = "solution">
+```{r}
+# load JSON data into data frame
+jsonBooks <- fromJSON("data/books.json")
+authors = c()
+jsonBooks <- jsonBooks$books
+
+# create a comma separated list for authors of each book
+for(i in 1:nrow(books)){
+ authors <- append(authors, paste(unlist( books$author[i] ),collapse = ", "))
+}
+
+# update authors
+jsonBooks$author <- authors
+```
+</div>
+
+## View XML Data Table
+
+<div id = "solution">
+```{r}
+datatable(jsonBooks, options = list(filter = FALSE),filter="none")
+```
+</div>
+
+
+
+
