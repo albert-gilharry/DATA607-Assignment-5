@@ -3,14 +3,15 @@ title: 'DATA607 Assignment 4: Tidying and Transformation Data'
 author: "Albert Gilharry"
 date: "15 March 2018"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     css: ./css.css
     highlight: pygments
     pdf_document: default
     theme: cerulean
     toc: yes
+  pdf_document:
+    toc: yes
+always_allow_html: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -36,6 +37,7 @@ library("methods")
 library("jsonlite")
 library("stringr")
 library("DT")
+library ("RCurl")
 
 ```
 ## Preview HTML File
@@ -49,11 +51,13 @@ library("DT")
 ```{r}
 
 # load HTML data into data frame
-url <- "data/books.html"
+url <- "https://raw.githubusercontent.com/albert-gilharry/DATA607-Assignment-5/master/data/books.html"
 htmlBooks <- url %>%
   read_html() %>%
   html_nodes("table") %>%
   html_table()
+
+htmlBooks <- htmlBooks[[1]]
 ```
 </div>
 
@@ -61,7 +65,7 @@ htmlBooks <- url %>%
 
 <div id = "solution">
 ```{r}
-datatable(htmlBooks, options = list(filter = FALSE),filter="none")
+datatable(htmlBooks, options = list(filter = FALSE), filter = "none")
 ```
 </div>
 
@@ -80,7 +84,9 @@ This may not be most efficient way of doing so, but this is a very small data se
 
 <div id = "solution">
 ```{r}
-doc <- xmlParse("data/books.xml")
+
+url <- getURL("https://raw.githubusercontent.com/albert-gilharry/DATA607-Assignment-5/master/data/books.xml")
+doc <- xmlParse(url)
 
 data <- xpathSApply(doc, "//BOOKS/BOOK/AUTHORS",xmlChildren, simplify = TRUE)
 authors = c()
@@ -93,7 +99,7 @@ for(i in 1:length(data)){
 }
 
 # use the built in function to create the data frame
-xmlBooks <- xmlToDataFrame("data/books.xml",stringsAsFactors = FALSE)
+xmlBooks <- xmlToDataFrame(url,stringsAsFactors = FALSE)
 
 # fix the authors
 xmlBooks$AUTHORS <- authors
@@ -109,7 +115,7 @@ datatable(xmlBooks, options = list(filter = FALSE),filter="none")
 </div>
 
 
-## Preview XML File
+## Preview JSON File
 
 ![HTML FIle](images/JSON.PNG)
 
@@ -125,13 +131,14 @@ This may not be the most efficient way of doing so, but this is a very small dat
 <div id = "solution">
 ```{r}
 # load JSON data into data frame
-jsonBooks <- fromJSON("data/books.json")
+url <- getURL("https://raw.githubusercontent.com/albert-gilharry/DATA607-Assignment-5/master/data/books.json")
+jsonBooks <- fromJSON(url)
 authors = c()
 jsonBooks <- jsonBooks$books
 
 # create a comma separated list for authors of each book
-for(i in 1:nrow(books)){
- authors <- append(authors, paste(unlist( books$author[i] ),collapse = ", "))
+for(i in 1:nrow(jsonBooks)){
+ authors <- append(authors, paste(unlist( jsonBooks$author[i] ),collapse = ", "))
 }
 
 # update authors
@@ -139,7 +146,7 @@ jsonBooks$author <- authors
 ```
 </div>
 
-## View XML Data Table
+## View JSON Data Table
 
 <div id = "solution">
 ```{r}
@@ -147,6 +154,10 @@ datatable(jsonBooks, options = list(filter = FALSE),filter="none")
 ```
 </div>
 
+## Conclusion
 
-
-
+<div id = "comment">
+In conclusion, R packages make it relatively easy parse and load HTML, XML, and JSON data into data frames.
+These data frames were not identical due to how the packeges handle one to many relationships in JSON, and XML.
+The processing that I did eventlually led to all data frames being identical.
+</div>
